@@ -1,0 +1,72 @@
+- first connect to server like this <ssh username@ip>
+ssh username@ip
+- set password <password>
+
+then we want to add our ssh key to the server so the next time not write password
+
+on local machine:
+    # generate ssh key on you local pc if you don't have one
+    - ssh-keygen (if you don't have the ssh key on your local)
+    # get the generated ssh public key and copy it
+    - cat ~/.ssh/id_ed25519.pub (get the public key)
+    
+on server:
+    - connect to server via ssh
+    # add ssh to authorized keys
+    - sudo nano ~/.ssh/authorized_keys (paste the public key) and click ctrl+x then y
+
+// now you have access to server 
+// install dependicies on server
+on server:
+    - sudo apt update
+    # install docker
+    - sudo apt install docker.io docker-compose
+    - sudo systemctl start docker
+    - sudo systemctl enable docker
+
+    # install nginx (this is for serving the website)
+    - sudo apt install nginx
+    - cd /etc/nginx
+    - sudo nano nginx.conf (change www-data to server username in this case "administrator")
+
+    # install certbot (this is for add https certificates)
+    - sudo add-apt-repository ppa:certbot/certbot
+    - sudo apt-get update
+    - sudo apt-get install python3-certbot-nginx
+
+    # install certificate 
+    - sudo certbot --nginx -d example.com
+
+// add project to the server
+
+on server:
+    # generate ssh key for this project
+    - ssh-keygen -t rsa -b 4096 -C "m7mdelganainy2001@gmail.com" -f ~/.ssh/<project name>
+    # get the generated ssh public key and copy it
+    - cat ~/.ssh/<project name>.pub (get the public key)
+    - paste it in github repositry --> settings --> deploy keys
+
+    // note this must be done everytime you pull request
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/<project name>
+    - git clone git@github.com:<username>/<project name>.git
+    # to update the existing repository 
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/<project name>
+    - git pull
+
+    // now the project 
+    - cd <project name>
+    - sudo docker-compose down
+    - sudo docker-compose up -d --build
+    # to see project logs
+    - sudo docker-compose logs
+
+    // copy nginx.conf 
+    - cp /root/<project name>/nginx.conf /etc/nginx/sites-enabled/<project name>.conf
+    - sudo nginx -s reload
+
+    //// if domain still not working 
+    - cd /etc/nginx/sites-enabled/
+    - sudo nano default
+    - hash for any line that have the domain

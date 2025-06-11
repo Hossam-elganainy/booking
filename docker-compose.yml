@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  django:
+    build: .
+    restart: always
+    command: bash -c "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn --workers 2 --bind  0.0.0.0:8000 --preload Chatbot.wsgi:application"
+    container_name: islamic_chatbot
+    volumes:
+      - .:/islamic_chatbot
+    env_file:
+      - .env
+    ports:
+      - "8555:8000"

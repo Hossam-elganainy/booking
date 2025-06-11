@@ -1,0 +1,20 @@
+django==4.2.15
+django-environ==0.9.0
+psycopg2-binary==2.9.5
+# psycopg2==2.9.5
+pillow==10.4.0
+django-filter==22.1
+# Fabric3@git+https://github.com/ahmedyasserays/fabric.git@ff01d6b7c65ca6477261a92765e25b5f36fa8dfa
+gunicorn==20.1.0
+djangorestframework==3.14.0
+# django-allauth==64.0.0
+djangorestframework-simplejwt==5.3.1 
+# dj-rest-auth==6.0.0
+requests==2.32.3
+drf-yasg==1.21.7
+django-filter
+django-cors-headers==4.4.0
+black==22.10.0
+django-jazzmin
+django-unfold
+# django-ckeditor==6.7.1
