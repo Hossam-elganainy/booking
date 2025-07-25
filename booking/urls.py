@@ -34,7 +34,8 @@ urlpatterns += i18n_patterns(
 
     path('api/auth/', include('rest_framework.urls')),
     path('api/book/', include('book.urls')),
-    # path('api/users/', include('users.urls')),
+    path('api/users/', include('users.urls')),
+    path('api/reservations/', include('reservations.urls')),
 
     path('api/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),  
 )

@@ -1,4 +1,4 @@
-# .env
+.env
 # db.*
 *.pyc
 notes.*
@@ -6,7 +6,7 @@ notes.*
 /venv
 /media
 /static
-# .env
+.env
 celerybeat-schedule
 /.vscode 
 # Byte-compiled / optimized / DLL files
